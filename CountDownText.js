@@ -10,16 +10,17 @@ this.refs.countDownText.start();
 this.refs.countDownText.end();
 */
 
-'use strict'
+'use strict';
 
-var React = require('react-native');
+import React, {Component} from 'react';
 
-var {
-  StyleSheet,
-  Text,
-} = React;
+import {
+    StyleSheet,
+    Text,
+    addons
+} from 'react-native';
 
-var update = React.addons.update,
+var update = addons.update,
     countDown = require('./countDown');
 
 var CountDownText = React.createClass({

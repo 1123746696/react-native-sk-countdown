@@ -4,4 +4,4 @@ var CountDownText = require('./CountDownText');
 module.exports = {
   countDown,
   CountDownText
-}
+};
