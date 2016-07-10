@@ -1,14 +1,14 @@
 /**
-用于倒计时显示的Text组件
-1 声明组件
-<CountDownText ref='countDownText' startText='开始计时' endText='结束计时' intervalText={(sec) => '还有' + sec + 's'} />
+ 用于倒计时显示的Text组件
+ 1 声明组件
+ <CountDownText ref='countDownText' startText='开始计时' endText='结束计时' intervalText={(sec) => '还有' + sec + 's'} />
 
-2 开始计时
-this.refs.countDownText.start();
+ 2 开始计时
+ this.refs.countDownText.start();
 
-3 结束计时
-this.refs.countDownText.end();
-*/
+ 3 结束计时
+ this.refs.countDownText.end();
+ */
 
 'use strict';
 
@@ -17,11 +17,11 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     Text,
-    addons
 } from 'react-native';
 
-var update = addons.update,
-    countDown = require('./countDown');
+
+var update = require('react-addons-update');
+var countDown = require('./countDown');
 
 var CountDownText = React.createClass({
   counter: null, // 计时器
@@ -70,10 +70,10 @@ var CountDownText = React.createClass({
       // 重新初始化计时器
       var config = update(nextProps, { // 不能直接修改 this.props，因此使用 update.$merge
         $merge: {
-            onInterval: this.onInterval, // 定时回调
-            onEnd: this.onEnd // 结束回调
-          }
-        });
+          onInterval: this.onInterval, // 定时回调
+          onEnd: this.onEnd // 结束回调
+        }
+      });
       this.counter.setData(config);
       // 开始计时
       if(nextProps.auto){
@@ -91,21 +91,21 @@ var CountDownText = React.createClass({
   },
   componentDidMount: function(){
     /*
-    this.counter = countDown({
-        countType: "seconds",
-        onInterval: (sec) => {},// 定时回调
-        onEnd: (timePassed) => {}, // 结束回调
-        timeLeft: 60,//正向计时 时间起点为0秒
-        step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
-    });
-    */
+     this.counter = countDown({
+     countType: "seconds",
+     onInterval: (sec) => {},// 定时回调
+     onEnd: (timePassed) => {}, // 结束回调
+     timeLeft: 60,//正向计时 时间起点为0秒
+     step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
+     });
+     */
     // 创建计时器
     var config = update(this.props, { // 不能直接修改 this.props，因此使用 update.$merge
       $merge: {
-          onInterval: this.onInterval, // 定时回调
-          onEnd: this.onEnd // 结束回调
-        }
-      });
+        onInterval: this.onInterval, // 定时回调
+        onEnd: this.onEnd // 结束回调
+      }
+    });
     this.counter = countDown(config);
 
     // 判断是否结束

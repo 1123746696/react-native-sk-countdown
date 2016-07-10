@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/shigebeyond/react-native-sk-countdown.git"
   },
+  "devDependencies": {
+    "react-addons-update": "^15.2.0"
+  },
   "keywords": [
     "react-native",
     "countdown"
