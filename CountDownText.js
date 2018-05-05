@@ -19,37 +19,34 @@ import {
     Text,
 } from 'react-native';
 
+import update from 'react-addons-update'
+import countDown from './countDown'
 
-var update = require('react-addons-update');
-var countDown = require('./countDown');
-
-var CountDownText = React.createClass({
-  counter: null, // 计时器
-  // 定时回调
-  getDefaultProps: function(){
-    return {
-      countType: "seconds",
-      onEnd: null, // 结束回调
-      timeLeft: 0,//正向计时 时间起点为0秒
-      step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
-      startText: null, // 开始的文本
-      intervalText: null, // 定时的文本，可以是回调函数
-      endText: null, // 结束的文本
-      auto: false, // 是否自动开始
-    };
-  },
-  getInitialState: function(){
-    return {
+export default class CountDownText extends Component{
+  counter = null
+  static defaultProps = {
+    countType: "seconds",
+    onEnd: null, // 结束回调
+    timeLeft: 0,//正向计时 时间起点为0秒
+    step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
+    startText: null, // 开始的文本
+    intervalText: null, // 定时的文本，可以是回调函数
+    endText: null, // 结束的文本
+    auto: false, // 是否自动开始
+  }
+  constructor (props) {
+    super (props);
+    this.state = {
       text: this.props.startText, // 要显示文本
     }
-  },
+  }
   // 判断两个时间是否相等，如果两个时间差在阀值之内，则可认为是相等
-  isTimeEquals: function(t1, t2){
+  isTimeEquals(t1, t2){
     var threshold = 2;
     return Math.abs(t1 - t2) < threshold;
-  },
+  }
   // 当更新
-  componentWillReceiveProps: function(nextProps){
+  componentWillReceiveProps(nextProps){
     // 判断是否要重新计时
     var updating = true;
     if(this.props.step == nextProps.step && this.props.step < 0){ // 倒计时的情况
@@ -80,16 +77,16 @@ var CountDownText = React.createClass({
         this.start();
       }
     }
-  },
+  }
   // 定时调用 intervalText 来更新状态 text
-  onInterval: function(){
+  onInterval(){
     this.setState({text: this.props.intervalText.apply(null, arguments)})
-  },
-  onEnd: function(timePassed){
+  }
+  onEnd(timePassed){
     this.setState({text: this.props.endText});
     this.props.afterEnd && this.props.afterEnd(timePassed);
-  },
-  componentDidMount: function(){
+  }
+  componentDidMount(){
     /*
      this.counter = countDown({
      countType: "seconds",
@@ -100,7 +97,7 @@ var CountDownText = React.createClass({
      });
      */
     // 创建计时器
-    var config = update(this.props, { // 不能直接修改 this.props，因此使用 update.$merge
+    let config = update(this.props, { // 不能直接修改 this.props，因此使用 update.$merge
       $merge: {
         onInterval: this.onInterval, // 定时回调
         onEnd: this.onEnd // 结束回调
@@ -118,29 +115,28 @@ var CountDownText = React.createClass({
     if(this.props.auto){
       this.start();
     }
-  },
-  componentWillUnmount: function(){
+  }
+  componentWillUnmount(){
     // 重置倒计时
     this.reset();
-  },
+  }
   // 开始计时
-  start: function(){
+  start(){
     this.counter.start();
-  },
+  }
   // 结束计时
-  end: function(){
+  end(){
     this.counter.end();
-  },
+  }
   // 重置
-  reset: function(){
+  reset(){
     this.counter.reset();
-  },
-  render: function(){
+  }
+  render(){
     return <Text style={this.props.style}>{this.state.text}</Text>
-  },
-  getTimePassed: function(){
+  }
+  getTimePassed(){
     return this.counter.timePassed;
   }
-});
+}
 
-module.exports = CountDownText;
