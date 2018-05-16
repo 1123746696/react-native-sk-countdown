@@ -36,6 +36,8 @@ export default class CountDownText extends Component{
   }
   constructor (props) {
     super (props);
+    this.onEnd = this.onEnd.bind(this)
+    this.onInterval = this.onInterval.bind(this)
     this.state = {
       text: this.props.startText, // 要显示文本
     }

@@ -1,7 +1,7 @@
-var countDown = require('./countDown');
-var CountDownText = require('./CountDownText');
-
-module.exports = {
-  countDown,
-  CountDownText
-};
+import countDown from './countDown'
+import CountDownText from './CountDownText'
+const component = {
+  get countDown() { return countDown },
+  get CountDownText() { return CountDownText }
+}
+module.exports = component;
